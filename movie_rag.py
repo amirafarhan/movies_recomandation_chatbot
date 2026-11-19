@@ -147,12 +147,16 @@ def format_context(docs: list[Document]) -> str:
     return "\n".join(doc.page_content.strip() + "\n" for doc in docs)
 
 
-def generate_answer(llm, question: str, docs: list[Document]) -> str:
-    """Answer ``question`` using only the retrieved ``docs`` as context."""
+def generate_answer(llm, question: str, docs: list[Document], **generation_kwargs) -> str:
+    """Answer ``question`` using only the retrieved ``docs`` as context.
+
+    ``generation_kwargs`` (e.g. ``max_new_tokens``, ``temperature``) override the
+    defaults set in :func:`load_llm` for this call only.
+    """
     if not docs:
         return NOT_FOUND_MESSAGE
     message = PROMPT.format(context=format_context(docs), question=question)
-    response = llm.invoke(message)
+    response = llm.invoke(message, pipeline_kwargs=generation_kwargs) if generation_kwargs else llm.invoke(message)
     return getattr(response, "content", response).strip()
 
 

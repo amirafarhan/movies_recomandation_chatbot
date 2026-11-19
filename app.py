@@ -38,8 +38,10 @@ def get_vectorstore():
 
 
 @st.cache_resource(show_spinner="Loading Qwen2.5-0.5B-Instruct (first run downloads ~1 GB)...")
-def get_llm(max_new_tokens: int, temperature: float):
-    return movie_rag.load_llm(max_new_tokens=max_new_tokens, temperature=temperature)
+def get_llm():
+    # Loaded once and shared; generation settings are passed per request so that
+    # changing the sliders does not load another copy of the model.
+    return movie_rag.load_llm()
 
 
 def results_frame(results) -> pd.DataFrame:
@@ -131,7 +133,8 @@ with tab_chat:
                     if use_llm:
                         with st.spinner("Thinking..."):
                             answer = movie_rag.generate_answer(
-                                get_llm(max_new_tokens, temperature), question, [d for d, _ in results]
+                                get_llm(), question, [d for d, _ in results],
+                                max_new_tokens=max_new_tokens, temperature=temperature,
                             )
                     elif results:
                         top = sources.iloc[0]
