@@ -52,8 +52,8 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-> On a CPU-only machine you can install the smaller CPU build of PyTorch first:
-> `pip install torch --index-url https://download.pytorch.org/whl/cpu`
+> `requirements.txt` installs the CPU-only build of PyTorch (from download.pytorch.org), which is much
+> smaller than the default CUDA build. To use a GPU, install a CUDA build of PyTorch instead.
 
 ## ▶️ Run
 
@@ -100,7 +100,7 @@ Open `MovieRAG.ipynb` in Jupyter and run the cells in order.
 - `Qwen2.5-0.5B-Instruct` is small and samples with temperature 0.3, so answers vary between runs and
   it can occasionally list a retrieved movie under the wrong genre. Use the genre filter for strict
   genre lists, or a larger Qwen model (change `LLM_MODEL` in `movie_rag.py`) for better quality.
-- The Qwen model needs roughly 2–3 GB of RAM on CPU.
+- Peak memory is about 2 GB with the Qwen model loaded on CPU (about 0.9 GB in search-only mode).
 
 ## 📈 Future Improvements
 
