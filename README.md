@@ -4,6 +4,8 @@ An AI-powered movie recommendation chatbot built with **LangChain**, **ChromaDB*
 
 It uses Retrieval-Augmented Generation (RAG) to answer movie questions using only a custom movie catalog stored in `movies.json` (31 movies across 9 genres).
 
+**🔗 Live demo:** https://movie-rag-chatbot98.streamlit.app/
+
 The chatbot can:
 
 - Recommend movies by genre or by mood/plot description
@@ -58,6 +60,11 @@ pip install -r requirements.txt
 ## ▶️ Run
 
 ### Streamlit demo
+
+Live demo: https://movie-rag-chatbot98.streamlit.app/ (after a period of inactivity the first
+answer can take a few minutes while the models download again).
+
+Run locally:
 
 ```bash
 streamlit run app.py
